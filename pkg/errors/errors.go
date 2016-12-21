@@ -5,6 +5,7 @@ import (
 	"os"
 
 	utilglog "github.com/openshift/source-to-image/pkg/util/glog"
+	"github.com/spf13/cobra"
 )
 
 // Common S2I errors
@@ -276,4 +277,9 @@ func CheckError(err error) {
 		glog.Errorf("An error occurred: %v", err)
 		os.Exit(1)
 	}
+}
+
+func UsageError(cmd *cobra.Command, format string, args ...interface{}) error {
+	msg := fmt.Sprintf(format, args...)
+	return fmt.Errorf("%s\nSee '%s -h' for help and examples.", msg, cmd.CommandPath())
 }
